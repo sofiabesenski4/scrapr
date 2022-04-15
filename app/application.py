@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect
 import os
-from app.views import QueryForm
+from .views import QueryForm
 
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ app.config['SECRET_KEY'] = os.environ["SECRET_KEY"]
 # from flask_wtf import FlaskForm
 # from wtforms import StringField
 WTF_CSRF_ENABLED = False
-testing= 123
+
 
 @app.route('/', methods=['GET', 'POST'])
 def search():
