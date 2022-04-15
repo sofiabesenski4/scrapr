@@ -1,16 +1,12 @@
 import app.models.google_maps_adapter as gm
-import os 
+import os
 
 
-def test_get_places():
+def test_get_website_for_a_place_search():
     adapter = gm.GoogleMapsAdapter(os.environ["GOOGLE_MAPS_API_KEY"])
-    results =  adapter.places({"type": "restaurant"})
-    breakpoint()
+    google_places_data = adapter.places_ids({"type": "restaurant"})
 
+    the_first_places_result = google_places_data[0]
+    first_website = adapter.place_website(the_first_places_result)
 
-def test_get_website_for_place():
-    pass
-
-
-def test_get_maps_data_for_a_place():
-    pass
+    assert "http" in first_website
