@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+      <h3>Query Params:</h3>
+      {{ query_params }}
+      <h3>Results</h3>
+      {{ data }}
+    </div>
+
+    <hr>
+    <br>
+    <a href="{{ url_for('search') }}">Back to Search</a>
+
+  </div>
+</div>
+
+{% endblock %}

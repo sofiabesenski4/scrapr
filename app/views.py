@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
 class QueryForm(FlaskForm):
-    text = StringField('name', validators=[DataRequired()])
-    place_type = StringField('type', validators=[DataRequired()])
+    business_type = StringField('type', validators=[DataRequired()])
+    submit = SubmitField("Submit")

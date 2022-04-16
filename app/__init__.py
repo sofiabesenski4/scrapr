@@ -1,1 +1,1 @@
-import app
+from app.views import QueryForm

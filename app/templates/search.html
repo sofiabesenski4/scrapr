@@ -6,11 +6,10 @@
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
       <p class="lead">Search</p>
-
-      Form goes here!
-
-      <p class="pt-5"><strong>{{ message }}</strong></p>
-
+      <form method="POST" action="/">
+        {{ form.business_type.label }} {{ form.business_type(size=20) }}
+        <input type="submit" value="Go">
+      </form>
     </div>
   </div>
 </div>
