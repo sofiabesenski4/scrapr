@@ -1,7 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, session
+from flask import Flask, render_template, redirect, url_for, request 
 import os
-from app.views import QueryForm
-from app.models import GoogleMapsAdapter
+from views import QueryForm
+from models import GoogleMapsAdapter
 import numpy as np
 
 app = Flask(__name__)
@@ -19,14 +19,13 @@ WTF_CSRF_ENABLED = False
 def search():
     form = QueryForm(meta={'csrf': False})
     if form.validate_on_submit():
-        session["place_type"] = form.business_type.data
         return redirect(url_for(".results", place_type=form.business_type.data))
     return render_template('search.html', form=form)
 
 
 @app.route('/results', methods=['GET'])
 def results():
-    place_type = session['place_type']
+    place_type = request.args['place_type'] 
     google_connection = GoogleMapsAdapter(os.environ["GOOGLE_MAPS_API_KEY"])
 
     query_params = {"type": place_type}
