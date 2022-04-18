@@ -12,14 +12,15 @@ def test_search():
 def test_results_for_place_type():
     tester = app.test_client()
     response = tester.get(
-            "/results?place_type=restaurant",
+            "/results?place_type=bar",
             content_type="html/text"
             )
 
     assert response.status_code == 200
     assert b"Query Params" in response.data
     assert b"Results" in response.data
-    assert b"http" in response.data
+    assert b"Body" in response.data
+    
 
 def test_results_for_invalid_place_type():
     tester = app.test_client()

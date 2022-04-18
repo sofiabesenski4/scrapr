@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request 
 import os
 from views import QueryForm
-from models import GoogleMapsAdapter
+from models import GoogleMapsAdapter, Visitor, Webpage 
 import numpy as np
 
 app = Flask(__name__)
@@ -32,8 +32,20 @@ def results():
     place_ids = np.array(google_connection.places_ids(query_params))
     top_three_place_ids = place_ids[0:3]
 
-    data = [google_connection.place_website(
-        place_id) for place_id in top_three_place_ids]
+    urls = [google_connection.place_website(place_id)
+            for place_id in top_three_place_ids]
+    
+    
+    visitor = Visitor()
+    data = {}
+
+    for url in urls:
+        webpage = Webpage(visitor.get_html(url))
+        data[webpage] = {
+            "raw_html": webpage.html_doc,
+            "text": webpage.text
+            }
+    
     return render_template('results.html', query_params=query_params, data=data)
 
 
