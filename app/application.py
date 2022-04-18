@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request 
 import os
 from views import QueryForm
-from models import GoogleMapsAdapter
+from models import GoogleMapsAdapter, WebsiteScraper
 import numpy as np
 
 app = Flask(__name__)
@@ -32,8 +32,13 @@ def results():
     place_ids = np.array(google_connection.places_ids(query_params))
     top_three_place_ids = place_ids[0:3]
 
-    data = [google_connection.place_website(
+    websites = [google_connection.place_website(
         place_id) for place_id in top_three_place_ids]
+    
+    scraper = WebsiteScraper()
+
+    data = {website:scraper.scrape_data(website) for website in websites}
+
     return render_template('results.html', query_params=query_params, data=data)
 
 
