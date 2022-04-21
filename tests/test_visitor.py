@@ -17,8 +17,8 @@ def test_get_html(requests_get_mock):
     """
     requests_get_mock.return_value = requests_get_text_mock
 
-    visitor = Visitor("http://www.placecage.com")
-    html = visitor.get_html()
+    visitor = Visitor()
+    html = visitor.get_html("http://www.placecage.com")
 
     assert "Some head" in html
     assert "<div" in html

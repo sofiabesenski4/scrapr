@@ -12,7 +12,7 @@ def test_get_website_for_a_place_search():
     assert "http" in first_website
 
 def test_get_website_data():
-    raw_html = Visitor("http://www.placecage.com").get_html()
+    raw_html = Visitor().get_html("http://www.placecage.com")
 
     webpage = Webpage(raw_html)
 
