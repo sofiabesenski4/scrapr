@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import requests
 
 class Webpage:
     def __init__(self, html_doc):
