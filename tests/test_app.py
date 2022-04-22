@@ -19,7 +19,6 @@ def test_results_for_place_type():
     assert response.status_code == 200
     assert b"Query Params" in response.data
     assert b"Results" in response.data
-    assert b"Body" in response.data
     
 
 def test_results_for_invalid_place_type():
