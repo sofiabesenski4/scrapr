@@ -9,7 +9,7 @@ def example_html():
         Some Head Text
     </head>
     <body>
-        Some Body Text
+        Some \n\n\nBody\n Text
         <div>
             Some Div Text
         </div>
@@ -27,4 +27,4 @@ def test_visit_webpage(example_html):
     assert "Some Head Text" in webpage_text
     assert "<head" not in webpage_text
     assert "<div" not in webpage_text
-
+    assert "\n" not in webpage_text
