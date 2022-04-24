@@ -3,6 +3,7 @@ import os
 from views import QueryForm
 from models import GoogleMapsAdapter, TextVisitor, Webpage 
 import numpy as np
+import csv
 
 app = Flask(__name__)
 
@@ -41,12 +42,19 @@ def results():
 
     for url in urls:
         webpage = Webpage(url)
-        data[webpage] = {
+        data[url] = {
             "text": webpage.accept(text_visitor)
             }
-    
+
+    save_results_to_file(data)
+
     return render_template('results.html', query_params=query_params, data=data)
 
+def save_results_to_file(data):
+    with open('test.csv', 'w', newline='') as csvfile:
+        tempwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for url, contents in data.items():
+            tempwriter.writerow([url, contents["text"]])
 
 if __name__ == '__main__':
     app.run()

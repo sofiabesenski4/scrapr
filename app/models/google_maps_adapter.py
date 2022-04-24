@@ -17,7 +17,13 @@ class GoogleMapsAdapter:
 
     def place_website(self, place_id):
         place_details = self.connection.place(place_id)
-        return self._extract_website_from_place_details(place_details)
+        site = "http://www.example.com"
+        try:
+            site = self._extract_website_from_place_details(place_details)
+        except KeyError as err:
+            print("ERROR: {0}".format(err))
+        finally:
+            return site
 
     def _extract_place_ids(self, places_response):
         return [result['place_id'] for result in places_response['results']]

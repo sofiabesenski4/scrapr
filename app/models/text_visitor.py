@@ -7,5 +7,5 @@ class TextVisitor:
 
     def _get_text(self, raw_html):
         soup = BeautifulSoup(raw_html, 'html.parser')
-        return soup.get_text()
+        return soup.get_text().replace("\n", "").replace(",", " ")
 
