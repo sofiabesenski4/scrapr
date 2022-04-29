@@ -1,9 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request 
 import os
 from views import QueryForm
-from models import GoogleMapsAdapter, TextVisitor, Webpage 
-import numpy as np
-import csv
 
 app = Flask(__name__)
 
@@ -26,29 +23,12 @@ def search():
 
 @app.route('/results', methods=['GET'])
 def results():
-    place_type = request.args['place_type'] 
-    google_connection = GoogleMapsAdapter(os.environ["GOOGLE_MAPS_API_KEY"])
+    place_type = request.args['place_type']
+    with faktory.connection() as client:
+        client.queue('scrape_job', args=[place_type])
+    return render_template('sent scraping job!')
 
-    query_params = {"type": place_type}
-    place_ids = np.array(google_connection.places_ids(query_params))
-    top_three_place_ids = place_ids[0:3]
 
-    urls = [google_connection.place_website(place_id)
-            for place_id in top_three_place_ids]
-    
-    
-    text_visitor = TextVisitor()
-    data = {}
-
-    for url in urls:
-        webpage = Webpage(url)
-        data[url] = {
-            "text": webpage.accept(text_visitor)
-            }
-
-    save_results_to_file(data)
-
-    return render_template('results.html', query_params=query_params, data=data)
 
 def save_results_to_file(data):
     with open('test.csv', 'w', newline='') as csvfile:
